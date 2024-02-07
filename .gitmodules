@@ -1,0 +1,3 @@
+[submodule "model-check"]
+	path = model-check
+	url = https://github.com/mathysgrapotte/model-check
