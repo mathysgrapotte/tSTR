@@ -3,6 +3,8 @@ include { INTERSECT_VCF_WITH_ONE_LINE_BED } from './workflows/intersect_vcf_with
 include { BUILD_FASTA} from './workflows/build_fasta.nf'
 include { PREDICT} from './workflows/predict.nf'
 include { FIND_GENE_IN_GCT } from './workflows/find_gene_in_gct.nf'
+include { MERGE_TO_MAKE_PLOT_DATA } from './workflows/merge_to_make_plot_data.nf'
+include { MAKE_PLOTS } from './workflows/make_plots.nf'
 
 workflow {
 
@@ -33,6 +35,13 @@ workflow {
 
     PREDICT(model_weights, model_architecture, individual_fasta)
     predictions = PREDICT.out.predictions
+
+    MERGE_TO_MAKE_PLOT_DATA(predictions, input_metadata, filtered_gct)
+    plot_data = MERGE_TO_MAKE_PLOT_DATA.out.plot_data
+
+    MAKE_PLOTS(plot_data)
+    scatter_plots = MAKE_PLOTS.out.scatter_plots
+
 
 }
 
